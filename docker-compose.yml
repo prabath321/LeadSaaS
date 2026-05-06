@@ -1,0 +1,43 @@
+services:
+  leads-mysql:
+    image: mysql:8.0
+    container_name: leads-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: leads_db
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_PASSWORD: root
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  leads-backend:
+    build:
+      context: ./leads-backend
+    container_name: leads-backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./leads-backend:/var/www
+    depends_on:
+      - leads-mysql
+    command: sh -c "sleep 15 && php artisan migrate --seed && php artisan serve --host=0.0.0.0 --port=8000"
+
+  leads-frontend:
+    build:
+      context: ./leads-frontend
+    container_name: leads-frontend
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./leads-frontend:/app
+      - /app/node_modules
+    depends_on:
+      - leads-backend
+    command: npm run dev -- --host 0.0.0.0
+
+volumes:
+  mysql_data:
