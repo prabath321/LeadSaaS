@@ -1,4 +1,4 @@
-FROM php:8.3-fpm
+FROM php:8.3-cli
 
 WORKDIR /var/www
 
@@ -14,6 +14,6 @@ RUN composer install --no-interaction
 
 RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 
-CMD php artisan migrate --seed --force && php artisan serve --host=0.0.0.0 --port=8000
-
 EXPOSE 8000
+
+CMD sh -c "sleep 15 && php artisan migrate --seed --force && php artisan serve --host=0.0.0.0 --port=8000"
