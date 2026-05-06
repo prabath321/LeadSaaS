@@ -105,7 +105,7 @@ docker compose run --rm leads-backend php artisan db:seed
 
 ```text
 Email: john.doe@example.com
-Password: pass
+Password: password
 ```
 
 ## API Endpoints
