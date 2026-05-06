@@ -176,7 +176,7 @@ MIT License
 
 ## Author
 
-Prabath Kumarasinghe
+Pium Leevanage
 Full Stack Developer | Laravel + React Engineer | Software Consultant
 
 ```
